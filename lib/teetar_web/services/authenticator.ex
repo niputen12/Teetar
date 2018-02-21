@@ -12,8 +12,8 @@ defmodule TeetarWeb.Services.Authenticator do
           token = generate_token(user)
           following_count = Accounts.get_following_count(user.id)
           follower_count = Accounts.get_followers(user.id)
-          {:ok, %{token: token, user: user}}
-          #{:ok, %{token: token, user: user, total_following: following_count, total_followers: follower_count}}
+        #  {:ok, %{token: token, user: user}}
+        {:ok, %{token: token, user: user, total_following: following_count, total_followers: follower_count}}
         else
           {:error, "invalid user"}
         end

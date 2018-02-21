@@ -40,13 +40,18 @@ defmodule Teetar.Accounts do
 
   def get_following_count(id) do
    # query = from f in Netizen, select: count(f.user_id == ^id)
-   # Netizen
-   # |> select([n], count(n.user_id == ^id))
-   # |> Repo.all()
+    Netizen
+     |> where([n], n.user_id == ^id)
+     |> select([n], count(n.user_id == ^id))
+     |> Repo.all()
   end
 
   def get_followers(id) do
-    query = from f in Netizen, select: count(f.following_id == ^id)
+
+    Netizen
+    |> where([n], n.following_id == ^id)
+    |> select([n], count(n.following_id == ^id))
+    |> Repo.all()
   end
 
   def get_user_by_username(username), do: Repo.get_by(User, username: username) |> Repo.preload([:followers, :posts])

@@ -21,14 +21,14 @@ defmodule TeetarWeb.UserView do
       username: user.username}
   end
 
-  #def render("user_with_token.json", %{user: %{user: user, token: token, total_following: following_count, total_followers: follower_count}}) do
-  def render("user_with_token.json", %{user: %{user: user, token: token}}) do
+  def render("user_with_token.json", %{user: %{user: user, token: token, total_following: following_count, total_followers: follower_count}}) do
+  #def render("user_with_token.json", %{user: %{user: user, token: token}}) do
      %{id: user.id,
        username: user.username,
        posts: render_many(user.posts, PostView, "user_posts.json"),
        followers: render_many(user.followers, NetizenView, "followings.json"),
-       # following: following_count,
-       # followers: follower_count,
+       following: following_count,
+       followers: follower_count,
        meta: %{
          token: token
       }
