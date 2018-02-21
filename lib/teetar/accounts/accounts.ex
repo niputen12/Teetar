@@ -8,6 +8,7 @@ defmodule Teetar.Accounts do
 
   alias Teetar.Accounts.User
   alias Teetar.Blog.Post
+  alias Teetar.Follower.Netizen
   @doc """
   Returns the list of users.
 
@@ -37,7 +38,18 @@ defmodule Teetar.Accounts do
   """
   def get_user!(id), do: Repo.get!(User, id)
 
-  def get_user_by_username(username), do: Repo.get_by(User, username: username) |> Repo.preload(:posts)
+  def get_following_count(id) do
+   # query = from f in Netizen, select: count(f.user_id == ^id)
+   # Netizen
+   # |> select([n], count(n.user_id == ^id))
+   # |> Repo.all()
+  end
+
+  def get_followers(id) do
+    query = from f in Netizen, select: count(f.following_id == ^id)
+  end
+
+  def get_user_by_username(username), do: Repo.get_by(User, username: username) |> Repo.preload([:followers, :posts])
   @doc """
   Creates a user.
 

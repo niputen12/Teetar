@@ -14,4 +14,14 @@ defmodule TeetarWeb.NetizenView do
     %{id: netizen.id,
       following_id: netizen.following_id}
   end
+
+  def render("followings.json", %{netizen: netizen}) do
+    %{data: render_one(netizen, NetizenView, "follow.json")}
+  end
+
+  def render("follow.json", %{netizen: netizen}) do
+    %{Followed: netizen.following_id
+
+    }
+  end
 end

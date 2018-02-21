@@ -18,7 +18,6 @@
                         'Elixir.TeetarWeb.Gettext',
                         'Elixir.TeetarWeb.NetizenController',
                         'Elixir.TeetarWeb.NetizenView',
-                        'Elixir.TeetarWeb.PeopleView',
                         'Elixir.TeetarWeb.PostController',
                         'Elixir.TeetarWeb.PostView','Elixir.TeetarWeb.Router',
                         'Elixir.TeetarWeb.Router.Helpers',
