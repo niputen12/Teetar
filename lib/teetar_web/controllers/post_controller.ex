@@ -9,7 +9,7 @@ defmodule TeetarWeb.PostController do
 
   def index(conn, _params) do
     posts = Blog.list_posts(conn.assigns.user)
-    render(conn, "user_post.json", posts: posts)
+    render(conn, "index.json", posts: posts)
   end
 
   def home(conn, _) do
