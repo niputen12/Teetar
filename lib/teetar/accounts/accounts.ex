@@ -48,7 +48,7 @@ defmodule Teetar.Accounts do
 
   def get_followers(id) do
 
-    Netizen
+    a = Netizen
     |> where([n], n.following_id == ^id)
     |> select([n], count(n.following_id == ^id))
     |> Repo.all()

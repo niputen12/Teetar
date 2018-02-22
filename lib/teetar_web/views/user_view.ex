@@ -22,7 +22,6 @@ defmodule TeetarWeb.UserView do
   end
 
   def render("user_with_token.json", %{user: %{user: user, token: token, total_following: following_count, total_followers: follower_count}}) do
-  #def render("user_with_token.json", %{user: %{user: user, token: token}}) do
      %{id: user.id,
        username: user.username,
        posts: render_many(user.posts, PostView, "user_posts.json"),
