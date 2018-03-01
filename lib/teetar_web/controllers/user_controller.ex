@@ -4,6 +4,8 @@ defmodule TeetarWeb.UserController do
   alias Teetar.Accounts
   alias Teetar.Accounts.User
   alias TeetarWeb.Services.Authenticator
+  alias TeetarWeb.Services.Mailer.Email
+  alias TeetarWeb.Services.Mailer.Mailer
 
   action_fallback TeetarWeb.FallbackController
 
@@ -14,6 +16,9 @@ defmodule TeetarWeb.UserController do
 
   def create(conn, %{"user" => user_params}) do
     with {:ok, %User{} = user} <- Accounts.create_user(user_params) do
+      Email.welcome_text_email(user.email)
+      |> Mailer.deliver_now
+
       conn
       |> put_status(:created)
       |> put_resp_header("location", user_path(conn, :show, user))

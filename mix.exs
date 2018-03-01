@@ -20,7 +20,7 @@ defmodule Teetar.Mixfile do
   def application do
     [
       mod: {Teetar.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :bamboo]
     ]
   end
 
@@ -42,7 +42,9 @@ defmodule Teetar.Mixfile do
       {:comeonin, "~> 4.0"},
       {:bcrypt_elixir, "~> 0.12"},
       {:joken, "~> 1.0"},
-      {:cors_plug, "~> 1.5"}
+      {:cors_plug, "~> 1.5"},
+      {:bamboo, "~> 0.7"},
+      {:bamboo_smtp, "~> 1.2.1"}
 
     ]
   end

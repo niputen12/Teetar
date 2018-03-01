@@ -16,7 +16,6 @@ defmodule TeetarWeb.Services.Authenticator do
         else
           {:error, "invalid user"}
         end
-
     end
   end
 
