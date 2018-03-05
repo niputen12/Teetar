@@ -5,5 +5,5 @@
   Your email address is <%= @email_address %> <br />
 
   <br />
-  <a href ="https://bulsuview/api/users/<%= @username %>/verify"> CLICK THIS TO VERIFY YOUR ACCOUNT </a >
+  <a href ="https://bulsu.herokuapp.com/api/users/<%= @username %>/verify"> CLICK THIS TO VERIFY YOUR ACCOUNT </a >
 </p>
