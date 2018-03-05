@@ -54,7 +54,7 @@ defmodule Teetar.Accounts do
     |> Repo.all()
   end
 
-  def get_user_by_username(username), do: Repo.get_by(User, username: username) |> Repo.preload([:followers, :posts])
+  def get_user_by_username(username), do: Repo.get_by(User, username: username) |> Repo.preload([:followers, :posts)
   @doc """
   Creates a user.
 
