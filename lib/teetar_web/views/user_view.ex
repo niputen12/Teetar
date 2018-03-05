@@ -15,7 +15,8 @@ defmodule TeetarWeb.UserView do
   end
 
   def render("user.json", %{user: user}) do
-    %{firstname: user.firstname,
+    %{id: user.id,
+      firstname: user.firstname,
       lastname: user.lastname,
       email: user.email,
       username: user.username}

@@ -6,6 +6,7 @@ defmodule TeetarWeb.UserController do
   alias TeetarWeb.Services.Authenticator
   alias TeetarWeb.Services.Mailer.Email
   alias TeetarWeb.Services.Mailer.Mailer
+  alias Teetar.Code_generator
 
   action_fallback TeetarWeb.FallbackController
 
@@ -16,7 +17,12 @@ defmodule TeetarWeb.UserController do
 
   def create(conn, %{"user" => user_params}) do
     with {:ok, %User{} = user} <- Accounts.create_user(user_params) do
-      Email.welcome_text_email(user.email)
+
+      random_code_generator = :crypto.strong_rand_bytes(8) |> Base.url_encode64() |> binary_part(0, 8)
+      random_code = user_params |> Map.put("username", random_code_generator)
+      Code_generator.create_code(user.username, random_code["username"])
+
+      Email.welcome_text_email(user.email, user.username, random_code["username"])
       |> Mailer.deliver_now
 
       conn
@@ -27,7 +33,7 @@ defmodule TeetarWeb.UserController do
   end
 
   def show(conn, %{"id" => id}) do
-    user = Accounts.get_user!(id)
+    user = Accounts.get_user_by_username(id)
     render(conn, "show.json", user: user)
   end
 
@@ -46,15 +52,26 @@ defmodule TeetarWeb.UserController do
     end
   end
 
+  def verify(conn, %{"id" => id}) do
+    user = Accounts.get_user_by_username(id)
+
+    with {:ok, verified} <- Accounts.update_user(user, %{is_verified: true}) do
+        redirect conn, external: "https://bulsuview.herokuapp.com"
+      end
+  end
+
   def auth(conn, %{"username" => username, "password" => password}) do
-    case Authenticator.check(username, password) do
-      {:ok, user_with_token} ->
-        render(conn, "show_with_token.json", user_with_token)
-      {:error, reason} ->
-        conn
-        |> put_status(:unauthorized)
-        |> put_view(TeetarWeb.CustomErrorView)
-        |> render("errors.json", %{
+    is_verified = Accounts.check_if_new_user(username)
+    case is_verified.is_verified == true do
+      true ->
+        case Authenticator.check(username, password) do
+          {:ok, user_with_token} ->
+          render(conn, "show_with_token.json", user_with_token)
+          {:error, reason} ->
+          conn
+          |> put_status(:unauthorized)
+          |> put_view(TeetarWeb.CustomErrorView)
+          |> render("errors.json", %{
              errors: [
                %{
                  title: "unauthorized",
@@ -62,7 +79,20 @@ defmodule TeetarWeb.UserController do
                }
              ]
            })
-        |> halt()
+          |> halt()
+        end
+      _ ->
+        conn
+        |> put_status(:ok)
+        |> put_view(TeetarWeb.CustomErrorView)
+        |> render("errors.json", %{
+           errors: [
+             %{
+               title: "unauthorized",
+               detail: "Account not verified"
+             }
+           ]
+         })
     end
   end
 end

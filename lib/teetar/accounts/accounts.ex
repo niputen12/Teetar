@@ -87,7 +87,7 @@ defmodule Teetar.Accounts do
   """
   def update_user(%User{} = user, attrs) do
     user
-    |> User.changeset(attrs)
+    |> User.update_changeset(attrs)
     |> Repo.update()
   end
 
@@ -119,4 +119,6 @@ defmodule Teetar.Accounts do
   def change_user(%User{} = user) do
     User.changeset(user, %{})
   end
+
+  def check_if_new_user(username), do: Repo.get_by(User, username: username)
 end

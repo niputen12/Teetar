@@ -1,0 +1,52 @@
+=erl_crash_dump:0.3
+Fri Mar  2 18:48:40 2018
+Slogan: erl_child_setup closed
+System version: Erlang/OTP 20 [erts-9.1] [source] [64-bit] [smp:4:4] [ds:4:4:10] [async-threads:10] [hipe] [kernel-poll:false]
+Compiled: Mon Jan 29 15:35:42 2018
+Taints: Elixir.Bcrypt.Base,crypto,asn1rt_nif,erl_tracer,zlib
+Atoms: 24123
+Calling Thread: scheduler:2
+=scheduler:1
+Scheduler Sleep Info Flags: 
+Scheduler Sleep Info Aux Work: DD_THR_PRGR
+Current Port: 
+Run Queue Max Length: 0
+Run Queue High Length: 0
+Run Queue Normal Length: 0
+Run Queue Low Length: 0
+Run Queue Port Length: 1
+Run Queue Flags: UNKNOWN(36700176) | OUT_OF_WORK | HALFTIME_OUT_OF_WORK | NONEMPTY
+Current Process: 
+=scheduler:2
+Scheduler Sleep Info Flags: 
+Scheduler Sleep Info Aux Work: 
+Current Port: #Port<0.0>
+Run Queue Max Length: 0
+Run Queue High Length: 0
+Run Queue Normal Length: 2
+Run Queue Low Length: 0
+Run Queue Port Length: 0
+Run Queue Flags: NONEMPTY_NORMAL | OUT_OF_WORK | HALFTIME_OUT_OF_WORK | NONEMPTY | EXEC
+Current Process: 
+=scheduler:3
+Scheduler Sleep Info Flags: SLEEPING | TSE_SLEEPING | WAITING
+Scheduler Sleep Info Aux Work: 
+Current Port: 
+Run Queue Max Length: 0
+Run Queue High Length: 0
+Run Queue Normal Length: 0
+Run Queue Low Length: 0
+Run Queue Port Length: 0
+Run Queue Flags: OUT_OF_WORK | HALFTIME_OUT_OF_WORK | INACTIVE
+Current Process: 
+=scheduler:4
+Scheduler Sleep Info Flags: SLEEPING | TSE_SLEEPING
+Scheduler Sleep Info Aux Work: DELAYED_AW_WAKEUP
+Current Port: 
+Run Queue Max Length: 0
+Run Queue High Length: 0
+Run Queue Normal Length: 0
+Run Queue Low Length: 0
+Run Queue Port Length: 0
+Run Queue Flags: OUT_OF_WORK | HALFTIME_OUT_OF_WORK | INACTIVE | NONEMPTY | EXEC
+Current Process: 

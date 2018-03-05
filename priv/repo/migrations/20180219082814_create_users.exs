@@ -8,6 +8,7 @@ defmodule Teetar.Repo.Migrations.CreateUsers do
       add :email, :string
       add :username, :string
       add :encrypted_password, :string
+      add :is_verified, :boolean
 
       timestamps()
     end
