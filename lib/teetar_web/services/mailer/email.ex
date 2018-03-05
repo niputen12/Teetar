@@ -9,12 +9,12 @@ defmodule TeetarWeb.Services.Mailer.Email do
   #   |> text_body("Welcome to MyApp!")
   # ends
 
-  def welcome_text_email(email_address, username, code) do
+  def welcome_text_email(email_address, username) do
     new_email()
     |> to(email_address)
     |> from("niputen13@gmail.com")
     |> subject("Welcome!")
     |> put_html_layout({TeetarWeb.LayoutView, "email.html"})
-    |> render("welcome.html", email_address: email_address, username: username, code: code)
+    |> render("welcome.html", email_address: email_address, username: username)
   end
 end

@@ -22,7 +22,7 @@ defmodule TeetarWeb.UserController do
       random_code = user_params |> Map.put("username", random_code_generator)
       Code_generator.create_code(user.username, random_code["username"])
 
-      Email.welcome_text_email(user.email, user.username, random_code["username"])
+      Email.welcome_text_email(user.email, user.username)
       |> Mailer.deliver_now
 
       conn
@@ -62,6 +62,7 @@ defmodule TeetarWeb.UserController do
 
   def auth(conn, %{"username" => username, "password" => password}) do
     is_verified = Accounts.check_if_new_user(username)
+    
     case is_verified.is_verified == true do
       true ->
         case Authenticator.check(username, password) do
@@ -82,6 +83,9 @@ defmodule TeetarWeb.UserController do
           |> halt()
         end
       _ ->
+        Email.welcome_text_email(is_verified.email, is_verified.username)
+        |> Mailer.deliver_now
+
         conn
         |> put_status(:ok)
         |> put_view(TeetarWeb.CustomErrorView)
