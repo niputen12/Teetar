@@ -62,7 +62,7 @@ defmodule TeetarWeb.UserController do
 
   def auth(conn, %{"username" => username, "password" => password}) do
     is_verified = Accounts.check_if_new_user(username)
-    
+
     case is_verified.is_verified == true do
       true ->
         case Authenticator.check(username, password) do
@@ -83,20 +83,38 @@ defmodule TeetarWeb.UserController do
           |> halt()
         end
       _ ->
-        Email.welcome_text_email(is_verified.email, is_verified.username)
-        |> Mailer.deliver_now
+        case Authenticator.check(username, password) do
+          {:ok, user_with_token} ->
+          render(conn, "show_with_token.json", user_with_token)
+          {:error, reason} ->
+          conn
+          |> put_status(:unauthorized)
+          |> put_view(TeetarWeb.CustomErrorView)
+          |> render("errors.json", %{
+             errors: [
+               %{
+                 title: "unauthorized",
+                 detail: reason
+               }
+             ]
+           })
+          |> halt()
+        end
+        # removed email verification for the mean time
+        # Email.welcome_text_email(is_verified.email, is_verified.username)
+        # |> Mailer.deliver_now
 
-        conn
-        |> put_status(:ok)
-        |> put_view(TeetarWeb.CustomErrorView)
-        |> render("errors.json", %{
-           errors: [
-             %{
-               title: "unauthorized",
-               detail: "Account not verified"
-             }
-           ]
-         })
+        # conn
+        # |> put_status(:ok)
+        # |> put_view(TeetarWeb.CustomErrorView)
+        # |> render("errors.json", %{
+        #    errors: [
+        #      %{
+        #        title: "unauthorized",
+        #        detail: "Account not verified"
+        #      }
+        #    ]
+        #  })
     end
   end
 end
